@@ -187,10 +187,57 @@
     gap: 0.5rem 1rem;
   }
 
-  .primary-navigation ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+  [aria-controls="primary-navigation"] {
+    z-index: 100;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+
+    img {
+      border-radius: 0;
+    }
+  }
+
+  @media (width < 760px) {
+    [aria-expanded="false"] + .primary-navigation {
+      display: none;
+    }
+  }
+
+  .primary-navigation {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    @media (width < 760px) {
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      right: 0;
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      font-family: var(--ff-heading);
+      background-color: var(--background-accent-main);
+      padding: 2em;
+      border-radius: 0 0 0 var(--border-radius-3);
+
+      ul {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      li + li {
+        border-top: 2px solid var(--background-accent-light);
+        margin-block-start: 1.5rem;
+        padding-block-start: 1.5rem;
+      }
+    }
   }
 
   .hero {
@@ -218,7 +265,7 @@
     padding: 1rem;
     background-color: var(--background-light);
     border-radius: var(--border-radius-3);
-  
+
     img {
       border-radius: var(--border-radius-2);
     }
@@ -240,7 +287,7 @@
     padding: 0.5rem 1rem;
     border-radius: var(--border-radius-1);
   }
-  
+
   .button:hover,
   .button:focus-visible {
     background: var(--background-accent-light);
@@ -251,21 +298,21 @@
     background-color: var(--background-dark);
     padding-block: 2rem;
     text-align: center;
-  
+
     display: grid;
     gap: 2rem;
-  
+
     a {
       text-decoration: none;
       color: var(--text-main);
-  
+
       &:hover,
       &:focus-visible {
         color: var(--text-brand-light);
       }
     }
   }
-  
+
   .site-footer__title {
     font-size: var(--font-size-md);
     font-family: var(--ff-heading);
