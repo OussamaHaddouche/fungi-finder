@@ -145,8 +145,19 @@
     --border-radius-3: 0.75rem;
   }
 
-  body {
+  html {
     font-family: var(--ff-body);
+    line-height: 1.6;
+    scroll-padding: 2rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
     font-size: var(--font-size-regular);
     color: var(--text-main);
     background-color: var(--background-main);
@@ -186,7 +197,7 @@
     border-radius: var(--border-radius-3);
     color: white;
   }
-  
+
   .skip-to-main:not(:focus) {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -283,13 +294,21 @@
     }
   }
 
+  .mushroom-guide {
+    --card-title-font-size: var(--font-size-lg);
+    --card-title-color: var(--text-high-contrast);
+    --card-gap: 0.7rem;
+  }
+
   .card {
-    display: grid;
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap, 1rem);
     height: 100%;
     padding: 1rem;
     background-color: var(--background-light);
     border-radius: var(--border-radius-3);
+    align-content: start;
 
     img {
       border-radius: var(--border-radius-2);
@@ -299,6 +318,43 @@
   .card__title {
     color: var(--card-title-color, var(--text-brand));
     font-size: var(--card-title-font-size, var(--font-size-heading-sm));
+  }
+
+  .card__note {
+    background-color: var(--background-extra-light);
+    padding: 0.75rem;
+    border-radius: var(--border-radius-2);
+    margin-top: auto;
+  }
+
+  .tag-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    li {
+      padding: 0rem 0.25rem;
+      color: var(--text-high-contrast);
+      font-family: var(--ff-heading);
+      font-size: var(--font-size-sm);
+      background-color: var(--tag-background);
+      border-radius: var(--border-radius-1);
+
+      &[data-season="spring"] {
+        --tag-background: var(--clr-teal-500);
+      }
+      &[data-edible="edible"] {
+        --tag-background: var(--background-accent-main);
+      }
+      &[data-edible="toxic"] {
+        --tag-background: var(--clr-red-500);
+      }
+      &[data-season="summer"] {
+        --tag-background: var(--background-accent-main);
+      }
+      &[data-season="fall"] {
+        --tag-background: var(--clr-orange-500);
+      }
+    }
   }
 
   .button {
@@ -316,6 +372,14 @@
   .button:hover,
   .button:focus-visible {
     background: var(--background-accent-light);
+    color: var(--text-high-contrast);
+  }
+
+  select {
+    padding: 0.5rem 1rem;
+    background-color: var(--background-accent-main);
+    border: 0;
+    border-radius: var(--border-radius-2);
     color: var(--text-high-contrast);
   }
 
@@ -343,9 +407,77 @@
     font-family: var(--ff-heading);
     font-weight: 700;
   }
+
+  .faq-bento {
+    --card-title-color: var(--text-high-contrast);
+
+    display: grid;
+    gap: 1rem;
+    grid-template-areas:
+      "card-one"
+      "card-two"
+      "card-three"
+      "card-four";
+
+    @media (width > 600px) {
+      grid-template-areas:
+        "card-one card-two"
+        "card-three card-four";
+    }
+
+    @media (width > 900px) {
+      grid-template-areas:
+        "card-one card-two card-four"
+        "card-three card-three card-four";
+    }
+
+    .card > img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (width > 600px) {
+      .card:nth-child(even) > img {
+        order: 3;
+      }
+    }
+
+    .card:nth-child(1) {
+      grid-area: card-one;
+    }
+
+    .card:nth-child(2) {
+      grid-area: card-two;
+    }
+
+    .card:nth-child(3) {
+      grid-area: card-three;
+
+      @media (width > 900px) {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+
+        img {
+          grid-column: 1 / 2;
+          grid-row: 1 / 3;
+        }
+      }
+    }
+
+    .card:nth-child(4) {
+      grid-area: card-four;
+    }
+  }
 }
 
 @layer layout {
+  .flex-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
   /* select all except first child */
   .flow > * + * {
     margin-block-start: var(--flow-space, 1em);
@@ -360,6 +492,16 @@
 
     align-content: var(--grid-flow-alignment, start);
     justify-items: var(--grid-flow-justification, start);
+  }
+
+  .grid-auto-fit {
+    --min-col-size: 250px;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(var(--min-col-size), 100%), 1fr)
+    );
   }
 
   .equal-columns {
