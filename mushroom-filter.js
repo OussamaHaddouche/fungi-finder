@@ -25,7 +25,9 @@ function updateFilter(e) {
 
 function filterCards() {
   let hasVisibleCards = false;
-  cards.forEach((card) => {
+  cards.forEach((card, index) => {
+    const mushroomId = `mushroom-${index + 1}`;
+    card.style.viewTransitionName = `mushroom-card-${mushroomId}`;
     const season = card.querySelector("[data-season]").dataset.season;
     const edible = card.querySelector("[data-edible]").dataset.edible;
     const matchesSeason = currentFilters.season === season;
