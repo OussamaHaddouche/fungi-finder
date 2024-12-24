@@ -494,12 +494,12 @@
     justify-items: var(--grid-flow-justification, start);
   }
 
-  .grid-auto-fit {
+  .grid-auto-fill {
     --min-col-size: 250px;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(
-      auto-fit,
+      auto-fill,
       minmax(min(var(--min-col-size), 100%), 1fr)
     );
   }
@@ -617,5 +617,9 @@
   }
   .font-size-lg {
     font-size: var(--font-size-lg);
+  }
+
+  [hidden] {
+    display: none;
   }
 }
