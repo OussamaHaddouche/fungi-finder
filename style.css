@@ -326,6 +326,12 @@
     background-size: cover;
     font-size: var(--font-size-md);
     color: var(--text-high-contrast);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: fade-out forwards;
+      animation-timeline: view();
+      animation-range-start: exit;
+    }
   }
 
   .hero__title {
@@ -610,7 +616,7 @@
     transition: none !important;
     animation: none !important;
   }
-  
+
   .visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -670,5 +676,14 @@
 
   [hidden] {
     display: none;
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 }
